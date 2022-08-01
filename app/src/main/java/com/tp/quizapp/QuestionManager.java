@@ -1,4 +1,4 @@
-package com.example.quizapp;
+package com.tp.quizapp;
 
 import org.json.*;
 import org.json.JSONException;
