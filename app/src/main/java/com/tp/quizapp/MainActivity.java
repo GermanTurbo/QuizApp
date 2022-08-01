@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
          questionAmountTextField = findViewById(R.id.questionAmountTextField);
 
+
         startButton();
     }
 
@@ -36,11 +38,22 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String value = questionAmountTextField.getText().toString();
-                questionAmount =Integer.parseInt(value);
-                Intent i = new Intent(MainActivity.this,QuestionActivity.class);
-                i.putExtra("questionAmount",questionAmount);
-                startActivity(i);
+                if(checkForCorrectInput(value)){
+                    questionAmount = Integer.parseInt(value);
+                    Intent i = new Intent(MainActivity.this, QuestionActivity.class);
+                    i.putExtra("questionAmount", questionAmount);
+                    startActivity(i);
+                }
             }
         });
+    }
+
+    private boolean checkForCorrectInput(String value){
+        if(value.equals("") || value.equals("0")){
+            Toast.makeText(this, "Amount must be greater than 0", Toast.LENGTH_SHORT).show();
+            return false;
+        }else {
+            return true;
+        }
     }
 }
