@@ -63,10 +63,11 @@ public class QuestionActivity extends AppCompatActivity {
         questionManager = new QuestionManager(roundCount);
         questionManager.start();
         try {
-            Thread.sleep(1000);
+            questionManager.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
 
         updatePointsText();
         generateQuestion();
@@ -103,8 +104,6 @@ public class QuestionActivity extends AppCompatActivity {
 
 
     }
-
-
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void generateQuestion(){
@@ -184,20 +183,9 @@ public class QuestionActivity extends AppCompatActivity {
     }
 
     private void gameFinished(){
-        questionTitle.setVisibility(View.INVISIBLE);
-        button_answer_1.setVisibility(View.INVISIBLE);
-        button_answer_2.setVisibility(View.INVISIBLE);
-        button_answer_3.setVisibility(View.INVISIBLE);
-        button_answer_4.setVisibility(View.INVISIBLE);
-
-        pointsText.setTextSize(30f);
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            public void run() {
-                Intent i = new Intent(QuestionActivity.this,MainActivity.class);
-                startActivity(i);
-            }
-        }, 3000);
+        Intent i = new Intent(QuestionActivity.this,PointsScreenActivity.class);
+        i.putExtra("points",points);
+        startActivity(i);
 
     }
 
