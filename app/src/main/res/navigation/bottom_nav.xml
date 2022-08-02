@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottom_nav"
+    app:startDestination="@id/startGame_fragment">
+
+    <fragment
+        android:id="@+id/startGame_fragment"
+        android:name="quizapp.StartGame"
+        android:label="fragment_start_game"
+        tools:layout="@layout/fragment_start_game" />
+    <fragment
+        android:id="@+id/statsInformation_fragment"
+        android:name="quizapp.StatsInformation"
+        android:label="fragment_stats_information"
+        tools:layout="@layout/fragment_stats_information" />
+    <fragment
+        android:id="@+id/settings_fragment"
+        android:name="quizapp.Settings"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
+</navigation>

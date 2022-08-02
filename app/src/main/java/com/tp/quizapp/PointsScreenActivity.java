@@ -12,7 +12,6 @@ import android.widget.TextView;
 import quizapp.R;
 
 public class PointsScreenActivity extends AppCompatActivity {
-    private final int DELAY_TIME = 3000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,13 +35,8 @@ public class PointsScreenActivity extends AppCompatActivity {
         returnToMenuBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    public void run() {
-                        Intent i = new Intent(PointsScreenActivity.this,MainActivity.class);
-                        startActivity(i);
-                    }
-                }, DELAY_TIME);
+                Intent i = new Intent(PointsScreenActivity.this,MainActivity.class);
+                startActivity(i);
             }
         });
     }
