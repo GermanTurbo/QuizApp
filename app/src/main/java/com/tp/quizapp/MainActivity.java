@@ -17,46 +17,48 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentContainerView;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
 import quizapp.R;
+import quizapp.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
 
-    private int questionAmount;
-
-    TextView questionAmountTextField;
-
-    FragmentContainerView navigationView;
-
-    private ActionBar toolbar;
-
-    private BottomNavigationView bottomNavigationView;
+    private ActivityMainBinding binding;
 
 
-
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        toolbar = getSupportActionBar();
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
 
-        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
-        bottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.navigation_home, R.id.navigation_stats, R.id.navigation_settings)
+                .build();
+        NavController navController = Navigation.findNavController(this, R.id.fragment_activity_main);
+        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        NavigationUI.setupWithNavController(binding.bottomNavigationView, navController);
 
 
-        questionAmountTextField = findViewById(R.id.questionAmountTextField);
+        //toolbar = getSupportActionBar();
+        //bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
+        //bottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
 
-        startButton();
+
     }
 
-    private BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
+    /*private BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
@@ -80,40 +82,16 @@ public class MainActivity extends AppCompatActivity {
                     return true;
             }
             return true;
-        };
+        }
     };
 
     private void loadFragment(Fragment fragment){
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fragment,fragment);
-        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.replace(R.id.fragment_container,fragment);
+        fragmentTransaction.add(R.id.fragment_activity_main,fragment);
         fragmentTransaction.commit();
         System.out.println("---------------------->"+ fragment);
-    }
+    }*/
 
 
-    private void startButton() {
-        Button startButton = findViewById(R.id.start_btn);
-        startButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String value = questionAmountTextField.getText().toString();
-                if(checkForCorrectInput(value)){
-                    questionAmount = Integer.parseInt(value);
-                    Intent i = new Intent(MainActivity.this, QuestionActivity.class);
-                    i.putExtra("questionAmount", questionAmount);
-                    startActivity(i);
-                }
-            }
-        });
-    }
-
-    private boolean checkForCorrectInput(String value){
-        if(value.equals("") || value.equals("0")){
-            Toast.makeText(this, "Amount must be greater than 0", Toast.LENGTH_SHORT).show();
-            return false;
-        }else {
-            return true;
-        }
-    }
 }

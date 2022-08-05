@@ -3,21 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/bottom_nav"
-    app:startDestination="@id/startGame_fragment">
+    app:startDestination="@id/navigation_home">
 
     <fragment
-        android:id="@+id/startGame_fragment"
-        android:name="quizapp.StartGame"
-        android:label="fragment_start_game"
-        tools:layout="@layout/fragment_start_game" />
+        android:id="@+id/navigation_home"
+        android:name="com.tp.quizapp.ui.home.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home" />
     <fragment
-        android:id="@+id/statsInformation_fragment"
-        android:name="quizapp.StatsInformation"
-        android:label="fragment_stats_information"
+        android:id="@+id/navigation_stats"
+        android:name="com.tp.quizapp.ui.stats.StatsFragment"
+        android:label="@string/title_stats"
         tools:layout="@layout/fragment_stats_information" />
     <fragment
-        android:id="@+id/settings_fragment"
-        android:name="quizapp.Settings"
-        android:label="fragment_settings"
+        android:id="@+id/navigation_settings"
+        android:name="com.tp.quizapp.ui.settings.SettingsFragment"
+        android:label="@string/title_settings"
         tools:layout="@layout/fragment_settings" />
 </navigation>

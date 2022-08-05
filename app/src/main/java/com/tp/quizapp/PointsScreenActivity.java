@@ -22,7 +22,7 @@ public class PointsScreenActivity extends AppCompatActivity {
         returnToMenuButton();
     }
 
-    private void pointsText(){
+    private void pointsText() {
         TextView pointsTxt = findViewById(R.id.points_text2);
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -30,12 +30,12 @@ public class PointsScreenActivity extends AppCompatActivity {
         }
     }
 
-    private void returnToMenuButton(){
+    private void returnToMenuButton() {
         Button returnToMenuBtn = findViewById(R.id.return_to_menu_btn);
         returnToMenuBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(PointsScreenActivity.this,MainActivity.class);
+                Intent i = new Intent(PointsScreenActivity.this, MainActivity.class);
                 startActivity(i);
             }
         });

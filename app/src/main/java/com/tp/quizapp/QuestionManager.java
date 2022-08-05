@@ -17,7 +17,7 @@ public class QuestionManager extends Thread {
 
     private int questionAmount;
 
-    public QuestionManager(int questionAmount){
+    public QuestionManager(int questionAmount) {
         this.questionAmount = questionAmount;
     }
 
@@ -32,11 +32,11 @@ public class QuestionManager extends Thread {
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
             String line;
 
-            while((line = bufferedReader.readLine()) != null){
+            while ((line = bufferedReader.readLine()) != null) {
                 data = data + line;
             }
 
-            if(!data.isEmpty()){
+            if (!data.isEmpty()) {
                 JSONObject jsonObject = new JSONObject(data);
                 JSONArray results = jsonObject.getJSONArray("results");
 

@@ -56,7 +56,7 @@ public class QuestionActivity extends AppCompatActivity {
         //get questionAmount from MainActivity
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            roundCount= extras.getInt("questionAmount");
+            roundCount = extras.getInt("questionAmount");
         }
 
         questionManager = new QuestionManager(roundCount);
@@ -101,22 +101,21 @@ public class QuestionActivity extends AppCompatActivity {
         });
 
 
-
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private void generateQuestion(){
+    private void generateQuestion() {
         questions = questionManager.getQuestionsJSON();
         try {
 
             currQuestion = new Question(questions.get(currRound));
             questionTitle.setText(currQuestion.getTitleQuestion());
 
-            Log.d("Q1",currQuestion.getTitleQuestion());
-            Log.d("Q1","Correct: " + currQuestion.getCorrectAnswer());
-            Log.d("Q1",currQuestion.getIncorrectAnswer0());
-            Log.d("Q1",currQuestion.getIncorrectAnswer1());
-            Log.d("Q1",currQuestion.getIncorrectAnswer2());
+            Log.d("Q1", currQuestion.getTitleQuestion());
+            Log.d("Q1", "Correct: " + currQuestion.getCorrectAnswer());
+            Log.d("Q1", currQuestion.getIncorrectAnswer0());
+            Log.d("Q1", currQuestion.getIncorrectAnswer1());
+            Log.d("Q1", currQuestion.getIncorrectAnswer2());
 
 
         } catch (JSONException e) {
@@ -124,7 +123,7 @@ public class QuestionActivity extends AppCompatActivity {
         }
     }
 
-    private void randomizeAnswers(){
+    private void randomizeAnswers() {
         int max = 3;
         int min = 0;
         Random rand = new Random();
@@ -147,48 +146,48 @@ public class QuestionActivity extends AppCompatActivity {
 
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private void checkForCorrectAnswer(Button button){
-        if(button.getText().equals(currQuestion.getCorrectAnswer())){
+    private void checkForCorrectAnswer(Button button) {
+        if (button.getText().equals(currQuestion.getCorrectAnswer())) {
             win();
-        }else{
+        } else {
             lose();
         }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void lose() {
-        Toast.makeText(this,"Wrong!",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Wrong!", Toast.LENGTH_SHORT).show();
         nextQuestion();
 
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void win() {
-        Toast.makeText(this,"Correct!",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show();
         points++;
         nextQuestion();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private void nextQuestion(){
+    private void nextQuestion() {
         updatePointsText();
-        if(currRound == roundCount-1){
+        if (currRound == roundCount - 1) {
             gameFinished();
-        }else{
+        } else {
             currRound++;
             generateQuestion();
             randomizeAnswers();
         }
     }
 
-    private void gameFinished(){
-        Intent i = new Intent(QuestionActivity.this,PointsScreenActivity.class);
-        i.putExtra("points",points);
+    private void gameFinished() {
+        Intent i = new Intent(QuestionActivity.this, PointsScreenActivity.class);
+        i.putExtra("points", points);
         startActivity(i);
 
     }
 
-    private void updatePointsText(){
+    private void updatePointsText() {
         pointsText.setText("Points: " + points + "/" + roundCount);
     }
 }
