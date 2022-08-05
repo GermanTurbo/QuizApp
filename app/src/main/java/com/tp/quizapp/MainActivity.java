@@ -23,6 +23,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
@@ -49,9 +50,9 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.fragment_activity_main);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.bottomNavigationView, navController);
+        System.out.println("hallo");
 
 
-        //toolbar = getSupportActionBar();
         //bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
         //bottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
 
