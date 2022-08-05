@@ -1,4 +1,4 @@
-package com.tp.quizapp;
+package com.tp.quizapp.questions;
 
 import android.os.Build;
 

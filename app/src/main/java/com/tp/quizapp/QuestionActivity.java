@@ -12,6 +12,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.tp.quizapp.questions.Question;
+import com.tp.quizapp.questions.QuestionManager;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 

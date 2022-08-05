@@ -1,4 +1,6 @@
-package com.tp.quizapp;
+package com.tp.quizapp.questions;
+
+import com.tp.quizapp.questions.Question;
 
 import org.json.*;
 import org.json.JSONException;
