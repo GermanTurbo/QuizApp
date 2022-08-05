@@ -50,49 +50,8 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.fragment_activity_main);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.bottomNavigationView, navController);
-        System.out.println("hallo");
-
-
-        //bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
-        //bottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
 
 
     }
-
-    /*private BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-            Fragment fragment;
-            switch (item.getItemId()){
-                case R.id.startGame:
-                    fragment = new StartFragment();
-                    //toolbar.setTitle(menus[0]);
-                    loadFragment(fragment);
-                    return true;
-                case R.id.statsInformation:
-                    //toolbar.setTitle(menus[1]);
-                    fragment = new StatsFragment();
-                    loadFragment(fragment);
-                    return true;
-
-                case R.id.settings:
-                    //toolbar.setTitle(menus[2]);
-                    fragment = new SettingsFragment();
-                    loadFragment(fragment);
-                    return true;
-            }
-            return true;
-        }
-    };
-
-    private void loadFragment(Fragment fragment){
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container,fragment);
-        fragmentTransaction.add(R.id.fragment_activity_main,fragment);
-        fragmentTransaction.commit();
-        System.out.println("---------------------->"+ fragment);
-    }*/
-
 
 }
