@@ -6,8 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,6 +20,8 @@ import androidx.fragment.app.FragmentContainerView;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.tp.quizapp.QuestionActivity;
 
 import quizapp.R;
@@ -24,21 +29,84 @@ import quizapp.databinding.FragmentHomeBinding;
 
 public class HomeFragment extends Fragment {
 
-    private int questionAmount;
-
-    TextView questionAmountTextField;
+    private int questionAmount = 0;
+    private String questionCategory;
 
     private FragmentHomeBinding binding;
+    private View root;
+
+    private MaterialButtonToggleGroup chooseCategoryToggleGroup;
+    private MaterialButtonToggleGroup chooseQuestionAmountToggleGroup;
+
+    private boolean amountButtonSelected;
+    private boolean categoryButtonSelected;
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         HomeViewModel homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         binding = FragmentHomeBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
+        root = binding.getRoot();
+
 
         return root;
     }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        chooseCategoryToggleGroup = root.findViewById(R.id.category_button_group);
+        chooseQuestionAmountToggleGroup = root.findViewById(R.id.question_amount_button_group);
+
+
+        questionAmount();
+        questionCategory();
+
+    }
+
+    private void questionAmount() {
+        chooseQuestionAmountToggleGroup.addOnButtonCheckedListener(new MaterialButtonToggleGroup.OnButtonCheckedListener() {
+            @Override
+            public void onButtonChecked(MaterialButtonToggleGroup group, int checkedId, boolean isChecked) {
+                if (isChecked) {
+                    amountButtonSelected = true;
+                    if (checkedId == R.id.question_amount_button_group_button1) {
+                        questionAmount = 5;
+
+                    } else if (checkedId == R.id.question_amount_button_group_button2) {
+                        questionAmount = 10;
+
+                    } else if (checkedId == R.id.question_amount_button_group_button3) {
+                        questionAmount = 20;
+
+                    }
+                }
+            }
+        });
+    }
+
+    private void questionCategory() {
+        chooseCategoryToggleGroup.addOnButtonCheckedListener(new MaterialButtonToggleGroup.OnButtonCheckedListener() {
+            @Override
+            public void onButtonChecked(MaterialButtonToggleGroup group, int checkedId, boolean isChecked) {
+                if (isChecked) {
+                    categoryButtonSelected = true;
+                    if (checkedId == R.id.category_button_group_button1) {
+                        questionCategory = "Geography";
+
+                    } else if (checkedId == R.id.category_button_group_button2) {
+                        questionCategory = "Animals";
+
+                    } else if (checkedId == R.id.category_button_group_button3) {
+                        questionCategory = "Entertainment: Video Games";
+
+                    }
+                }
+            }
+        });
+    }
+
 
     @Override
     public void onDestroyView() {
@@ -49,33 +117,28 @@ public class HomeFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        questionAmountTextField = getView().findViewById(R.id.questionAmountTextField3);
-
         startButton();
     }
 
     private void startButton() {
+
         Button startButton = getView().findViewById(R.id.start_btn3);
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String value = questionAmountTextField.getText().toString();
-                if (checkForCorrectInput(value)) {
-                    questionAmount = Integer.parseInt(value);
+                if((amountButtonSelected && categoryButtonSelected)){
                     Intent i = new Intent(getActivity(), QuestionActivity.class);
-                    i.putExtra("questionAmount", questionAmount);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("questionAmount", questionAmount);
+                    bundle.putString("questionCategory", questionCategory);
+                    i.putExtras(bundle);
                     startActivity(i);
+
+                }else{
+                    Toast.makeText(getActivity(),"Select category and amount",Toast.LENGTH_SHORT).show();
                 }
+
             }
         });
-    }
-
-    private boolean checkForCorrectInput(String value) {
-        if (value.equals("") || value.equals("0")) {
-            Toast.makeText(getActivity(), "Amount must be greater than 0", Toast.LENGTH_SHORT).show();
-            return false;
-        } else {
-            return true;
-        }
     }
 }

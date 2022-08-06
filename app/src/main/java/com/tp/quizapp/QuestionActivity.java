@@ -25,7 +25,8 @@ import quizapp.R;
 
 public class QuestionActivity extends AppCompatActivity {
 
-    private int roundCount;
+    private int questionAmount;
+    private String questionCategory;
     private int currRound = 0;
 
     ArrayList<JSONObject> questions;
@@ -56,13 +57,14 @@ public class QuestionActivity extends AppCompatActivity {
 
         pointsText = findViewById(R.id.points_text);
 
-        //get questionAmount from MainActivity
+        //get questionAmount from HomeFragment
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            roundCount = extras.getInt("questionAmount");
+            questionAmount = extras.getInt("questionAmount");
+            questionCategory = extras.getString("questionCategory");
         }
 
-        questionManager = new QuestionManager(roundCount);
+        questionManager = new QuestionManager(questionAmount,questionCategory);
         questionManager.start();
         try {
             questionManager.join();
@@ -109,6 +111,7 @@ public class QuestionActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void generateQuestion() {
         questions = questionManager.getQuestionsJSON();
+
         try {
 
             currQuestion = new Question(questions.get(currRound));
@@ -174,7 +177,7 @@ public class QuestionActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void nextQuestion() {
         updatePointsText();
-        if (currRound == roundCount - 1) {
+        if (currRound == questionAmount - 1) {
             gameFinished();
         } else {
             currRound++;
@@ -191,6 +194,6 @@ public class QuestionActivity extends AppCompatActivity {
     }
 
     private void updatePointsText() {
-        pointsText.setText("Points: " + points + "/" + roundCount);
+        pointsText.setText("Points: " + points + "/" + questionAmount);
     }
 }

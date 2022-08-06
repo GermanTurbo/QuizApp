@@ -1,6 +1,7 @@
 package com.tp.quizapp.questions;
 
 import com.tp.quizapp.questions.Question;
+import com.tp.quizapp.utility.CategoryId;
 
 import org.json.*;
 import org.json.JSONException;
@@ -18,16 +19,25 @@ public class QuestionManager extends Thread {
     ArrayList<Question> questions = new ArrayList<>();
 
     private int questionAmount;
+    private String questionCategory;
 
-    public QuestionManager(int questionAmount) {
+    public QuestionManager(int questionAmount,String questionCategory) {
         this.questionAmount = questionAmount;
+        this.questionCategory = questionCategory;
     }
 
-    private void fetchJson() throws IOException, JSONException {
+
+
+    private void fetchJson() throws IOException, JSONException, InterruptedException {
         String data = "";
+        CategoryId categoryId = new CategoryId(questionCategory);
+        categoryId.start();
+        categoryId.join();
         try {
             URL url = new URL("https://opentdb.com/api.php?amount=" +
                     questionAmount +
+                    "&category=" +
+                    categoryId.getId() +
                     "&type=multiple&encode=base64");
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
             InputStream inputStream = httpURLConnection.getInputStream();
@@ -59,11 +69,13 @@ public class QuestionManager extends Thread {
     }
 
 
+
+
     @Override
     public void run() {
         try {
             fetchJson();
-        } catch (JSONException | IOException e) {
+        } catch (JSONException | IOException | InterruptedException e) {
             e.printStackTrace();
         }
     }
