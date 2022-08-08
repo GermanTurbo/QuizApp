@@ -1,5 +1,5 @@
 # QuizApp
-This is a Work-in-progress Quiz App
+This is a Work-in-progress Quiz App<br/>
 The final name will be different
 
 ## Screenshots
