@@ -131,7 +131,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 setSpinnerActive(true);
-                if((amountButtonSelected && categoryButtonSelected)){
+                if ((amountButtonSelected && categoryButtonSelected)) {
                     Intent i = new Intent(getActivity(), QuestionActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putInt("questionAmount", questionAmount);
@@ -139,19 +139,19 @@ public class HomeFragment extends Fragment {
                     i.putExtras(bundle);
                     startActivity(i);
 
-                }else{
+                } else {
                     setSpinnerActive(false);
-                    Toast.makeText(getActivity(),"Select category and amount",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Select category and amount", Toast.LENGTH_SHORT).show();
                 }
 
             }
         });
     }
 
-    private void setSpinnerActive(boolean active){
-        if(active){
+    private void setSpinnerActive(boolean active) {
+        if (active) {
             startButtonSpinner.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             startButtonSpinner.setVisibility(View.GONE);
         }
     }
