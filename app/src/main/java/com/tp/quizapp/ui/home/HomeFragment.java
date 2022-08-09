@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,6 +38,7 @@ public class HomeFragment extends Fragment {
 
     private MaterialButtonToggleGroup chooseCategoryToggleGroup;
     private MaterialButtonToggleGroup chooseQuestionAmountToggleGroup;
+    private ProgressBar startButtonSpinner;
 
     private boolean amountButtonSelected;
     private boolean categoryButtonSelected;
@@ -49,15 +51,18 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         root = binding.getRoot();
 
-
         return root;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         chooseCategoryToggleGroup = root.findViewById(R.id.category_button_group);
         chooseQuestionAmountToggleGroup = root.findViewById(R.id.question_amount_button_group);
+
+        startButtonSpinner = root.findViewById(R.id.spinner_start_button);
+        startButtonSpinner.setVisibility(View.GONE);
 
 
         questionAmount();
@@ -121,11 +126,11 @@ public class HomeFragment extends Fragment {
     }
 
     private void startButton() {
-
         Button startButton = getView().findViewById(R.id.start_btn3);
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                setSpinnerActive(true);
                 if((amountButtonSelected && categoryButtonSelected)){
                     Intent i = new Intent(getActivity(), QuestionActivity.class);
                     Bundle bundle = new Bundle();
@@ -135,10 +140,19 @@ public class HomeFragment extends Fragment {
                     startActivity(i);
 
                 }else{
+                    setSpinnerActive(false);
                     Toast.makeText(getActivity(),"Select category and amount",Toast.LENGTH_SHORT).show();
                 }
 
             }
         });
+    }
+
+    private void setSpinnerActive(boolean active){
+        if(active){
+            startButtonSpinner.setVisibility(View.VISIBLE);
+        }else{
+            startButtonSpinner.setVisibility(View.GONE);
+        }
     }
 }
