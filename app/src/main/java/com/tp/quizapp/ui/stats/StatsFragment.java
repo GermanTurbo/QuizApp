@@ -20,8 +20,6 @@ public class StatsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        StatsViewModel statsViewModel = new ViewModelProvider(this).get(StatsViewModel.class);
-
         binding = FragmentStatsInformationBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
