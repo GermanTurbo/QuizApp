@@ -1,6 +1,13 @@
 package com.tp.quizapp.ui.home;
 
+import static androidx.core.content.ContextCompat.getSystemService;
+
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkCapabilities;
+import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -154,4 +161,5 @@ public class HomeFragment extends Fragment {
             startButtonSpinner.setVisibility(View.GONE);
         }
     }
+
 }
