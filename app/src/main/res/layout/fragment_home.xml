@@ -86,6 +86,7 @@
                 style="?attr/materialButtonOutlinedStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="12sp"
                 android:text="@string/title_category_geography" />
 
             <Button
@@ -93,6 +94,7 @@
                 style="?attr/materialButtonOutlinedStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="12sp"
                 android:text="@string/title_category_animals" />
 
             <Button
@@ -100,6 +102,7 @@
                 style="?attr/materialButtonOutlinedStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="12sp"
                 android:text="@string/title_category_video_games" />
         </com.google.android.material.button.MaterialButtonToggleGroup>
 
