@@ -2,10 +2,19 @@ package com.tp.quizapp;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -39,7 +48,12 @@ public class QuestionActivity extends AppCompatActivity {
     Button button_answer_3;
     Button button_answer_4;
 
+    Button button_correct_answer;
+
+    Button continueButton;
+
     TextView pointsText;
+
 
     private int points;
 
@@ -55,7 +69,11 @@ public class QuestionActivity extends AppCompatActivity {
         button_answer_3 = findViewById(R.id.answer_3);
         button_answer_4 = findViewById(R.id.answer_4);
 
+        continueButton = findViewById(R.id.continue_button);
+        continueButton.setVisibility(View.GONE);
+
         pointsText = findViewById(R.id.points_text);
+
 
         //get questionAmount from HomeFragment
         Bundle extras = getIntent().getExtras();
@@ -64,7 +82,7 @@ public class QuestionActivity extends AppCompatActivity {
             questionCategory = extras.getString("questionCategory");
         }
 
-        questionManager = new QuestionManager(questionAmount,questionCategory);
+        questionManager = new QuestionManager(questionAmount, questionCategory);
         questionManager.start();
         try {
             questionManager.join();
@@ -105,6 +123,13 @@ public class QuestionActivity extends AppCompatActivity {
             }
         });
 
+        continueButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                nextQuestion();
+            }
+        });
+
 
     }
 
@@ -142,6 +167,7 @@ public class QuestionActivity extends AppCompatActivity {
         answers.add(button_answer_4);
 
         answers.get(randomNum).setText(currQuestion.getCorrectAnswer());
+        button_correct_answer = answers.get(randomNum);
         answers.remove(randomNum);
 
         answers.get(0).setText(currQuestion.getIncorrectAnswer0());
@@ -162,16 +188,15 @@ public class QuestionActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void lose() {
-        Toast.makeText(this, "Wrong!", Toast.LENGTH_SHORT).show();
-        nextQuestion();
-
+        showButtonColors();
+        continueButton.setVisibility(View.VISIBLE);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void win() {
-        Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show();
         points++;
-        nextQuestion();
+        showButtonColors();
+        continueButton.setVisibility(View.VISIBLE);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -180,10 +205,14 @@ public class QuestionActivity extends AppCompatActivity {
         if (currRound == questionAmount - 1) {
             gameFinished();
         } else {
+            continueButton.setVisibility(View.GONE);
             currRound++;
+            hideButtonColors();
             generateQuestion();
             randomizeAnswers();
         }
+
+
     }
 
     private void gameFinished() {
@@ -193,7 +222,27 @@ public class QuestionActivity extends AppCompatActivity {
 
     }
 
+
     private void updatePointsText() {
         pointsText.setText("Points: " + points + "/" + questionAmount);
+    }
+
+    private void showButtonColors() {
+        button_answer_1.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.md_theme_dark_errorContainer));
+        button_answer_2.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.md_theme_dark_errorContainer));
+        button_answer_3.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.md_theme_dark_errorContainer));
+        button_answer_4.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.md_theme_dark_errorContainer));
+        button_correct_answer.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.myGreen));
+
+    }
+
+
+    private void hideButtonColors() {
+        button_answer_1.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.md_theme_light_surfaceTintColor));
+        button_answer_2.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.md_theme_light_surfaceTintColor));
+        button_answer_3.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.md_theme_light_surfaceTintColor));
+        button_answer_4.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.md_theme_light_surfaceTintColor));
+
+
     }
 }

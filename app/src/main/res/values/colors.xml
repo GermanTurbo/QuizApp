@@ -60,4 +60,5 @@
     <color name="md_theme_dark_onPrimary">#381E72</color>
     <color name="md_theme_dark_primaryContainer">#4F378B</color>
     <color name="md_theme_dark_primary">#D0BCFF</color>
+    <color name="myGreen">#9beb34</color>
 </resources>
