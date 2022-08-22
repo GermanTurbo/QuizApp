@@ -138,12 +138,17 @@ public class HomeFragment extends Fragment {
             public void onClick(View view) {
                 setSpinnerActive(true);
                 if ((amountButtonSelected && categoryButtonSelected)) {
-                    Intent i = new Intent(getActivity(), QuestionActivity.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putInt("questionAmount", questionAmount);
-                    bundle.putString("questionCategory", questionCategory);
-                    i.putExtras(bundle);
-                    startActivity(i);
+                    if(isNetworkConnected()){
+                        Intent i = new Intent(getActivity(), QuestionActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("questionAmount", questionAmount);
+                        bundle.putString("questionCategory", questionCategory);
+                        i.putExtras(bundle);
+                        startActivity(i);
+                    }else {
+                        setSpinnerActive(false);
+                        Toast.makeText(getActivity(),"No network connection",Toast.LENGTH_SHORT).show();
+                    }
 
                 } else {
                     setSpinnerActive(false);
@@ -161,5 +166,12 @@ public class HomeFragment extends Fragment {
             startButtonSpinner.setVisibility(View.GONE);
         }
     }
+
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
+    }
+
 
 }
